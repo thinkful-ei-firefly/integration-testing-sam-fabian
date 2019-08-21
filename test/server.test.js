@@ -42,6 +42,19 @@ describe('Test /frequency', () => {
       );
   });
 
+  it('should return a object with neccesary keys', () => {
+      return supertest(app)
+      .get('/frequency')
+      .query({s:'aaBBAAbbaa'})
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then(
+        res => {
+          expect(res.body).to.be.an('object').that.to.include.all.keys('unique', 'average', 'highest');
+        }
+      );
+  });
+
   it('should return a object equal to another', () => {
       const expected = {
         unique: 2,
